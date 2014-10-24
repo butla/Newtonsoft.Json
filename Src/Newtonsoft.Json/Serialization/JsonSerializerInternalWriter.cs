@@ -525,7 +525,10 @@ namespace Newtonsoft.Json.Serialization
             if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Verbose)
                 TraceWriter.Trace(TraceLevel.Verbose, JsonPosition.FormatMessage(null, writer.Path, "Writing type name '{0}' for {1}.".FormatWith(CultureInfo.InvariantCulture, typeName, type)), null);
 
-            writer.WritePropertyName(JsonTypeReflector.TypePropertyName, false);
+            if (!typeof(IEnumerable).IsAssignableFrom(type))
+            {
+                writer.WritePropertyName(JsonTypeReflector.TypePropertyName, false);
+            }
             writer.WriteValue(typeName);
         }
 
@@ -620,7 +623,7 @@ namespace Newtonsoft.Json.Serialization
             writer.WriteEndArray();
 
             if (hasWrittenMetadataObject)
-                writer.WriteEndObject();
+                writer.WriteEndArray();
 
             _serializeStack.RemoveAt(_serializeStack.Count - 1);
 
@@ -706,7 +709,8 @@ namespace Newtonsoft.Json.Serialization
 
             if (writeMetadataObject)
             {
-                writer.WriteStartObject();
+                //writer.WriteStartObject(); // TODO write start array
+                writer.WriteStartArray();
 
                 if (isReference)
                 {
@@ -714,9 +718,9 @@ namespace Newtonsoft.Json.Serialization
                 }
                 if (includeTypeDetails)
                 {
-                    WriteTypeProperty(writer, values.GetType());
+                    WriteTypeProperty(writer, values.GetType());    // TODO write type as raw value, without property name
                 }
-                writer.WritePropertyName(JsonTypeReflector.ArrayValuesPropertyName, false);
+                //writer.WritePropertyName(JsonTypeReflector.ArrayValuesPropertyName, false);
             }
 
             if (contract.ItemContract == null)

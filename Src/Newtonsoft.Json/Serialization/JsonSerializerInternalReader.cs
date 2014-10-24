@@ -623,7 +623,7 @@ namespace Newtonsoft.Json.Serialization
             {
                 string propertyName = reader.Value.ToString();
 
-                if (propertyName.Length > 0 && propertyName[0] == '$')
+                if (propertyName.Length > 0 && propertyName[0] == '$') //TODO zmień na coś innego
                 {
                     // read metadata properties
                     // $type, $id, $ref, etc
@@ -660,7 +660,7 @@ namespace Newtonsoft.Json.Serialization
                                 metadataProperty = true;
                             }
                         }
-                        else if (string.Equals(propertyName, JsonTypeReflector.TypePropertyName, StringComparison.Ordinal))
+                        else if (string.Equals(propertyName, JsonTypeReflector.TypePropertyName, StringComparison.Ordinal)) // TODO czytanie typu
                         {
                             CheckedRead(reader);
                             string qualifiedTypeName = reader.Value.ToString();
