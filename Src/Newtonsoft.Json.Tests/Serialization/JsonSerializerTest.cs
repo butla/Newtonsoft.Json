@@ -182,12 +182,12 @@ namespace Newtonsoft.Json.Tests.Serialization
     28,
     ""jakis tekst"",
     {
-      ""$type"": ""UniSerialDotNet.DaneA, UniSerialDotNet"",
+      ""$type"": ""Newtonsoft.Json.Tests.Serialization.JsonSerializerTest+DaneA, Newtonsoft.Json.Tests"",
       ""liczbaA"": 13,
       ""tekstA"": ""domyslny""
     },
     {
-      ""$type"": ""UniSerialDotNet.DaneB, UniSerialDotNet"",
+      ""$type"": ""Newtonsoft.Json.Tests.Serialization.JsonSerializerTest+DaneB, Newtonsoft.Json.Tests"",
       ""liczbaB"": 5.25,
       ""liczbaA"": 13,
       ""tekstA"": ""domyslny""
