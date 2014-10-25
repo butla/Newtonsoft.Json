@@ -251,6 +251,7 @@
     <Compile Include="Serialization\DependencyInjectionTests.cs" />
     <Compile Include="Serialization\FSharpTests.cs" />
     <Compile Include="Serialization\ImmutableCollectionsTests.cs" />
+    <Compile Include="Serialization\JacksonCompatibilityTest.cs" />
     <Compile Include="Serialization\JsonPropertyCollectionTests.cs" />
     <Compile Include="Serialization\JsonSerializerTest.cs" />
     <Compile Include="Serialization\MetadataPropertyHandlingTests.cs" />
