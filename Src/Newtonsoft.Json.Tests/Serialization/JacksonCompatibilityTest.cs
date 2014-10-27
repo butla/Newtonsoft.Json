@@ -21,22 +21,47 @@ namespace Newtonsoft.Json.Tests.Serialization
         [Test]
         public void AAADeserialize()
         {
+//            string serializedCall = @"{
+//  ""@class"":""uniserialjava.Call"",
+//  ""someStrings"": [ ""java.util.ArrayList"", [""a"", ""b"", ""c""] ],
+//  ""someInts"": [1,2,3],
+//  ""parameters"": [
+//    ""[Ljava.lang.Object;"",
+//    [
+//      28,
+//      ""jakis tekst"",
+//      {
+//        ""@class"":""uniserialjava.DaneB"",
+//        ""numberA"":13,
+//        ""stringA"":""domyslny"",
+//        ""numberB"":5.25
+//      },
+//      [""[I"",[1,2,3] ]]
+//    ]
+//  ]
+//}";
             string serializedCall = @"{
-  ""@class"":""uniserialjava.Call"",
-  ""someStrings"": [ ""java.util.ArrayList"", [""a"", ""b"", ""c""] ],
-  ""someInts"": [1,2,3],
+  ""$type"": ""Newtonsoft.Json.Tests.Serialization.Call, Newtonsoft.Json.Tests"",
+  ""someStrings"": [
+    ""System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib"",
+    [""a"", ""b"", ""c""]
+  ],
+  ""someInts"": [1, 2, 3],
   ""parameters"": [
-    ""[Ljava.lang.Object;"",
+    ""System.Object[], mscorlib"",
     [
       28,
       ""jakis tekst"",
       {
-        ""@class"":""uniserialjava.DaneB"",
-        ""numberA"":13,
-        ""stringA"":""domyslny"",
-        ""numberB"":5.25
+        ""$type"": ""Newtonsoft.Json.Tests.Serialization.DaneB, Newtonsoft.Json.Tests"",
+        ""liczbaB"": 5.25,
+        ""liczbaA"": 13,
+        ""tekstA"": ""domyslny""
       },
-      [""[I"",[1,2,3] ]]
+      {
+        ""$type"": ""System.Int32[], mscorlib"",
+        ""$values"": [1, 2, 3]
+      }
     ]
   ]
 }";
