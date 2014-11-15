@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using Newtonsoft.Json.Utilities;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,13 @@ namespace Newtonsoft.Json.Tests.Serialization
 
         public JacksonCompatibilityTest()
         {
+            var toJavaDict = new Dictionary<string, string>
+            {
+                {"Newtonsoft.Json.Tests.Serialization.DaneA, Newtonsoft.Json.Tests", "com.example.jsonrpc4jtest.DaneA"},
+                {"Newtonsoft.Json.Tests.Serialization.DaneB, Newtonsoft.Json.Tests", "com.example.jsonrpc4jtest.DaneB"}
+            };
+            JavaTypeDictionary.SetTypeDictionary(toJavaDict);
+
             CommonSettings = new JsonSerializerSettings();
             CommonSettings.TypeNameHandling = TypeNameHandling.All;
 
@@ -42,15 +50,25 @@ namespace Newtonsoft.Json.Tests.Serialization
         }
     }
 
-    class DaneA
+    public class DaneA : IEquatable<DaneA>
     {
         public int liczbaA = 13;
         public string tekstA = "domyslny";
+
+        public bool Equals(DaneA other)
+        {
+            return this.liczbaA == other.liczbaA && this.tekstA.Equals(other.tekstA);
+        }
     }
 
-    class DaneB : DaneA
+    public class DaneB : DaneA, IEquatable<DaneB>
     {
         public double liczbaB = 5.25;
+
+        public bool Equals(DaneB other)
+        {
+            return this.liczbaB == other.liczbaB && base.Equals(other);
+        }
     }
 
     public class Call

@@ -8,17 +8,12 @@ namespace Newtonsoft.Json.Utilities
 {
     public static class JavaTypeDictionary
     {
-        private static Dictionary<string, string> toJavaDict;
-        private static Dictionary<string, string> fromJavaDict;
+        private static Dictionary<string, string> toJavaDict = new Dictionary<string,string>();
+        private static Dictionary<string, string> fromJavaDict = new Dictionary<string,string>();
 
-        static JavaTypeDictionary()
+        public static void SetTypeDictionary(Dictionary<string, string> dotNetToJavaTypes)
         {
-            toJavaDict = new Dictionary<string, string>
-            {
-                {"Newtonsoft.Json.Tests.Serialization.DaneA, Newtonsoft.Json.Tests", "com.example.jsonrpc4jtest.DaneA"},
-                {"Newtonsoft.Json.Tests.Serialization.DaneB, Newtonsoft.Json.Tests", "com.example.jsonrpc4jtest.DaneB"}
-            };
-
+            toJavaDict = dotNetToJavaTypes;
             fromJavaDict = toJavaDict.ToDictionary(x => x.Value, x => x.Key);
         }
 
