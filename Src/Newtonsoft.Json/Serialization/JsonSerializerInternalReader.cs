@@ -623,7 +623,7 @@ namespace Newtonsoft.Json.Serialization
             {
                 string propertyName = reader.Value.ToString();
 
-                if (propertyName.Length > 0 && propertyName[0] == '$') //TODO zmień na coś innego
+                if (propertyName.Length > 0 && propertyName[0] == '@')
                 {
                     // read metadata properties
                     // $type, $id, $ref, etc
@@ -660,7 +660,7 @@ namespace Newtonsoft.Json.Serialization
                                 metadataProperty = true;
                             }
                         }
-                        else if (string.Equals(propertyName, JsonTypeReflector.TypePropertyName, StringComparison.Ordinal)) // TODO czytanie typu
+                        else if (string.Equals(propertyName, JsonTypeReflector.TypePropertyName, StringComparison.Ordinal))
                         {
                             CheckedRead(reader);
                             string qualifiedTypeName = reader.Value.ToString();
@@ -708,6 +708,9 @@ namespace Newtonsoft.Json.Serialization
 
             if (resolvedTypeNameHandling != TypeNameHandling.None)
             {
+                // enables working with objects serialized by Jackon
+                qualifiedTypeName = JavaTypeDictionary.FromJava(qualifiedTypeName) ?? qualifiedTypeName;
+
                 string typeName;
                 string assemblyName;
                 ReflectionUtils.SplitFullyQualifiedTypeName(qualifiedTypeName, out typeName, out assemblyName);

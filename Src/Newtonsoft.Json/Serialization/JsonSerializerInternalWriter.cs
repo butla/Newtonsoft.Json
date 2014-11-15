@@ -525,11 +525,8 @@ namespace Newtonsoft.Json.Serialization
             if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Verbose)
                 TraceWriter.Trace(TraceLevel.Verbose, JsonPosition.FormatMessage(null, writer.Path, "Writing type name '{0}' for {1}.".FormatWith(CultureInfo.InvariantCulture, typeName, type)), null);
 
-            if (!typeof(IEnumerable).IsAssignableFrom(type))
-            {
-                writer.WritePropertyName(JsonTypeReflector.TypePropertyName, false);
-            }
-            writer.WriteValue(typeName);
+            writer.WritePropertyName(JsonTypeReflector.TypePropertyName, false);
+            writer.WriteValue(JavaTypeDictionary.ToJava(typeName) ?? typeName);
         }
 
         private bool HasFlag(DefaultValueHandling value, DefaultValueHandling flag)
@@ -623,7 +620,7 @@ namespace Newtonsoft.Json.Serialization
             writer.WriteEndArray();
 
             if (hasWrittenMetadataObject)
-                writer.WriteEndArray();
+                writer.WriteEndObject();
 
             _serializeStack.RemoveAt(_serializeStack.Count - 1);
 
@@ -709,8 +706,7 @@ namespace Newtonsoft.Json.Serialization
 
             if (writeMetadataObject)
             {
-                //writer.WriteStartObject(); // TODO write start array
-                writer.WriteStartArray();
+                writer.WriteStartObject();
 
                 if (isReference)
                 {
@@ -718,9 +714,9 @@ namespace Newtonsoft.Json.Serialization
                 }
                 if (includeTypeDetails)
                 {
-                    WriteTypeProperty(writer, values.GetType());    // TODO write type as raw value, without property name
+                    WriteTypeProperty(writer, values.GetType());
                 }
-                //writer.WritePropertyName(JsonTypeReflector.ArrayValuesPropertyName, false);
+                writer.WritePropertyName(JsonTypeReflector.ArrayValuesPropertyName, false);
             }
 
             if (contract.ItemContract == null)
